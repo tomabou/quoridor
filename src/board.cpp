@@ -13,6 +13,7 @@ void board::put_wall(int a, int b, int x)
         return;
     }
     this->v[a * (this->size - 1) + b] = x;
+    this->wall[this->turn]++;
 }
 
 void board::show()
@@ -30,7 +31,7 @@ void board::show()
             int w1 = get_wall(i, j);
             int w2 = get_wall(i - 1, j);
             char pos = (w1 == 1 || w2 == 1) ? '|' : ' ';
-            std::cout << ' ' << pos;
+            std::cout << get_porn_exp(i, j) << pos;
         }
         std::cout << " #" << std::endl;
         if (i == this->size - 1)
@@ -61,4 +62,22 @@ int board::get_wall(int a, int b)
         return 0;
     }
     return this->v[a * (this->size - 1) + b];
+}
+
+char board::get_porn_exp(int a, int b)
+{
+    if (this->porn[0] == a * this->size + b)
+    {
+        return 'A';
+    }
+    if (this->porn[1] == a * this->size + b)
+    {
+        return 'B';
+    }
+    return ' ';
+}
+
+void board::put_porn(int a, int b)
+{
+    this->porn[0] = a * (this->size) + b;
 }
