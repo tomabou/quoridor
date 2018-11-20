@@ -17,7 +17,21 @@ int main()
     b->put_wall(2, 6, 2);
     //b->put_porn(4, 5);
     //b->put_porn(5, 5);
-    std::cout << b->min_length(39) << std::endl;
+    std::cout << b->min_length(39, 0) << std::endl;
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            int x = b->temp[i * 9 + j];
+            if (x == 100)
+            {
+                x = 0;
+            }
+            std::cout << x;
+        }
+        std::cout << std::endl;
+    }
+    std::cout << b->min_length(39, 1) << std::endl;
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)

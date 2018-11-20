@@ -33,6 +33,35 @@ void board::put_wall(int a, int b, int x)
     this->turn = 1 - this->turn;
 }
 
+bool board::can_put(int a, int b, int vh)
+{
+    if (a < 0 || a >= this->size - 1 || b < 0 || b >= this->size - 1)
+    {
+        return false;
+    }
+    if (this->wall[this->turn] == 0)
+    {
+        return false;
+    }
+    if (this->v[a * (this->size - 1) + b] != 0)
+    {
+        return false;
+    }
+    this->v[a * (this->size - 1) + b] = vh;
+    if (this->min_length(this->porn[0], 0) == 100)
+    {
+        this->v[a * (this->size - 1) + b] = 0;
+        return false;
+    }
+    if (this->min_length(this->porn[1], 1) == 100)
+    {
+        this->v[a * (this->size - 1) + b] = 0;
+        return false;
+    }
+    this->v[a * (this->size - 1) + b] = 0;
+    return true;
+}
+
 void board::show()
 {
     for (int j = 0; j < this->size * 2 + 1; j++)
@@ -87,7 +116,7 @@ void board::put_porn(int a, int b)
     this->turn = 1 - this->turn;
 }
 
-int board::min_length(int pos)
+int board::min_length(int pos, int target)
 {
     for (auto &x : this->temp)
     {
@@ -106,7 +135,7 @@ int board::min_length(int pos)
             if (temp[nv] == 100 && is_connect(v, nv))
             {
                 temp[nv] = temp[v] + 1;
-                if (nv < this->size)
+                if (nv / this->size == (1 - target) * (this->size - 1))
                 {
                     return temp[nv];
                 }
