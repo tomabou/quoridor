@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include <queue>
+#include <cassert>
 
 class board
 {
@@ -16,12 +17,12 @@ private:
   std::array<int, 2> porn;
   char get_porn_exp(int, int);
   bool is_connect(int, int);
-  bool can_put(int, int, int);
 
 public:
   std::vector<int> temp;
   void show();
   board(int);
+  bool can_put(int, int, int);
   void put_wall(int, int, int);
   int get_wall(int, int);
   void put_porn(int, int);

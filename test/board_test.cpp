@@ -46,4 +46,7 @@ int main()
         std::cout << std::endl;
     }
     b->show();
+    assert(!b->can_put(1, 0, 2));
+    assert(!b->can_put(1, 0, 1));
+    assert(b->can_put(5, 0, 1));
 }
