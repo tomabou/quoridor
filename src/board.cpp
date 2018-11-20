@@ -1,5 +1,18 @@
 #include "board.h"
 
+char board::get_porn_exp(int a, int b)
+{
+    if (this->porn[0] == a * this->size + b)
+    {
+        return 'A';
+    }
+    if (this->porn[1] == a * this->size + b)
+    {
+        return 'B';
+    }
+    return ' ';
+}
+
 board::board(int i)
 {
     this->v = std::vector<int>((i - 1) * (i - 1), 0);
@@ -14,6 +27,7 @@ void board::put_wall(int a, int b, int x)
     }
     this->v[a * (this->size - 1) + b] = x;
     this->wall[this->turn]++;
+    this->turn = 1 - this->turn;
 }
 
 void board::show()
@@ -28,8 +42,8 @@ void board::show()
         std::cout << "#";
         for (int j = 0; j < this->size - 1; j++)
         {
-            int w1 = get_wall(i, j);
-            int w2 = get_wall(i - 1, j);
+            int w1 = board::get_wall(i, j);
+            int w2 = board::get_wall(i - 1, j);
             char pos = (w1 == 1 || w2 == 1) ? '|' : ' ';
             std::cout << get_porn_exp(i, j) << pos;
         }
@@ -64,20 +78,8 @@ int board::get_wall(int a, int b)
     return this->v[a * (this->size - 1) + b];
 }
 
-char board::get_porn_exp(int a, int b)
-{
-    if (this->porn[0] == a * this->size + b)
-    {
-        return 'A';
-    }
-    if (this->porn[1] == a * this->size + b)
-    {
-        return 'B';
-    }
-    return ' ';
-}
-
 void board::put_porn(int a, int b)
 {
-    this->porn[0] = a * (this->size) + b;
+    this->porn[this->turn] = a * (this->size) + b;
+    this->turn = 1 - this->turn;
 }
